@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@tailwindcss/vite';
 import preact from '@astrojs/preact';
-import vercel from '@astrojs/vercel/static';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
   adapter: vercel({
