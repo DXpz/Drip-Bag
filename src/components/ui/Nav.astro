@@ -3,24 +3,24 @@ import { Image } from 'astro:assets';
 import logo from '../../assets/LOGOSINFONDO.png';
 ---
 
-<header class="sticky top-0 z-40 bg-brand-cream/95 backdrop-blur-sm shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+<header class="fixed top-0 left-0 right-0 z-50 bg-brand-cream/95 backdrop-blur-sm shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
   <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
     <a href="/" class="flex items-center gap-3">
-      <Image src={logo} alt="Drip Bag" class="h-12 w-auto" />
+      <Image src={logo} alt="Café sin prisa" class="h-10 md:h-12 w-auto" />
     </a>
 
-    <div class="flex items-center gap-6 md:gap-8">
-      <a href="/shop" class="font-accent text-[10px] md:text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors">
+    <div class="hidden md:flex items-center gap-8">
+      <a href="/shop" class="font-accent text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors">
         Tienda
       </a>
-      <a href="/galeria" class="font-accent text-[10px] md:text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors hidden md:inline">
+      <a href="/galeria" class="font-accent text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors">
         Galería
       </a>
-      <a href="/ritual" class="font-accent text-[10px] md:text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors hidden md:inline">
-        Ritual
+      <a href="/ritual" class="font-accent text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors">
+        Experiencia
       </a>
-      <a href="/experiencia" class="font-accent text-[10px] md:text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors hidden md:inline">
-        Experience
+      <a href="/experiencia" class="font-accent text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors">
+        Colección
       </a>
       <button
         aria-label="Abrir carrito"
@@ -34,5 +34,78 @@ import logo from '../../assets/LOGOSINFONDO.png';
         </span>
       </button>
     </div>
+
+    <button
+      id="menu-toggle"
+      aria-label="Abrir menú"
+      class="md:hidden p-2 text-brand-blue hover:text-brand-orange transition-colors"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+    </button>
   </nav>
+
+  <div id="mobile-menu" class="fixed inset-0 z-40 hidden">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="menu-overlay"></div>
+    <div class="absolute right-0 top-0 h-full w-72 bg-brand-cream shadow-[-8px_0_30px_rgba(0,0,0,0.08)] transform translate-x-full transition-transform duration-300" id="menu-panel">
+      <div class="p-6">
+        <div class="flex items-center justify-between mb-10">
+          <Image src={logo} alt="Café sin prisa" class="h-10 w-auto" />
+          <button id="menu-close" class="p-2 text-brand-blue hover:text-brand-orange transition-colors" aria-label="Cerrar menú">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <nav class="flex flex-col gap-6">
+          <a href="/shop" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">Tienda</a>
+          <a href="/galeria" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">Galería</a>
+          <a href="/ritual" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">Tu Experiencia</a>
+          <a href="/experiencia" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">La Colección</a>
+        </nav>
+        <div class="mt-10 pt-10 border-t border-brand-blue/10">
+          <button
+            aria-label="Ver carrito"
+            class="flex items-center gap-3 text-brand-blue hover:text-brand-orange transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            <span class="font-accent text-sm uppercase tracking-[0.1em]">Carrito</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </header>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const menuOverlay = document.getElementById('menu-overlay');
+  const menuPanel = document.getElementById('menu-panel');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  function openMenu() {
+    mobileMenu?.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      menuPanel?.classList.remove('translate-x-full');
+    });
+  }
+
+  function closeMenu() {
+    menuPanel?.classList.add('translate-x-full');
+    setTimeout(() => {
+      mobileMenu?.classList.add('hidden');
+    }, 300);
+  }
+
+  menuToggle?.addEventListener('click', openMenu);
+  menuClose?.addEventListener('click', closeMenu);
+  menuOverlay?.addEventListener('click', closeMenu);
+
+  document.querySelectorAll('#menu-panel a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+</script>

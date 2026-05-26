@@ -6,58 +6,58 @@ import Nav from '../components/ui/Nav.astro';
 import Footer from '../components/ui/Footer.astro';
 ---
 
-<Layout title="Drip Bag | Cafecito Práctico">
+<Layout title="Café sin prisa | Cafecito Práctico">
   <Nav />
 
   <main>
-    <section class="min-h-[80vh] flex items-center justify-center px-6 py-24">
+    <section class="min-h-[80vh] flex items-center justify-center px-6 py-24 pt-24">
       <div class="text-center max-w-3xl mx-auto">
         <div class="mb-8 flex justify-center">
-          <Image src={logo} alt="Drip Bag" class="h-32 md:h-48 w-auto opacity-90" />
+          <Image src={logo} alt="Café sin prisa" class="h-28 md:h-40 w-auto opacity-90" />
         </div>
         <p class="font-accent text-xs uppercase tracking-[0.3em] text-brand-orange mb-6">El Salvador</p>
-        <h1 class="font-display text-5xl md:text-7xl text-brand-blue mb-6 leading-tight">
+        <h1 class="font-display text-4xl md:text-6xl text-brand-blue mb-6 leading-tight">
           El café que<br />acompaña tu día
         </h1>
-        <p class="text-lg text-brand-blue/60 mb-10 max-w-xl mx-auto leading-relaxed">
+        <p class="text-base md:text-lg text-brand-blue/60 mb-10 max-w-xl mx-auto leading-relaxed">
           Drip bags premium que transforman cualquier momento en un ritual elegante.
           Práctico, sofisticado, delicioso.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="/shop" class="btn-primary">Explorar la Tienda</a>
-          <a href="/ritual" class="btn-secondary">Conocer el Ritual</a>
+          <a href="/shop" class="btn-primary w-full sm:w-auto">Explorar la Tienda</a>
+          <a href="/ritual" class="btn-secondary w-full sm:w-auto">Conoce el Proceso</a>
         </div>
       </div>
     </section>
 
-    <section class="py-24 px-6">
+    <section class="py-16 md:py-24 px-6">
       <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-          <a href="/shop" class="p-8 group">
-            <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-brand-blue/5 flex items-center justify-center group-hover:bg-brand-blue/10 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4B65D1" class="w-8 h-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
+          <a href="/shop" class="p-6 md:p-8 group">
+            <div class="w-14 h-14 md:w-16 md:h-16 mx-auto mb-5 md:mb-6 rounded-full bg-brand-blue/5 flex items-center justify-center group-hover:bg-brand-blue/10 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4B65D1" class="w-7 h-7">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
               </svg>
             </div>
-            <h3 class="font-display text-xl text-brand-blue mb-3 group-hover:text-brand-orange transition-colors">Tienda</h3>
-            <p class="text-brand-blue/60 text-sm leading-relaxed">Descubre nuestra colección de sabores premium.</p>
+            <h3 class="font-display text-lg md:text-xl text-brand-blue mb-2 md:mb-3 group-hover:text-brand-orange transition-colors">Tienda</h3>
+            <p class="text-brand-blue/60 text-sm leading-relaxed">Descubre nuestros sabores premium.</p>
           </a>
-          <a href="/galeria" class="p-8 group">
-            <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-brand-orange/5 flex items-center justify-center group-hover:bg-brand-orange/10 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E6735C" class="w-8 h-8">
+          <a href="/galeria" class="p-6 md:p-8 group">
+            <div class="w-14 h-14 md:w-16 md:h-16 mx-auto mb-5 md:mb-6 rounded-full bg-brand-orange/5 flex items-center justify-center group-hover:bg-brand-orange/10 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E6735C" class="w-7 h-7">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z" />
               </svg>
             </div>
-            <h3 class="font-display text-xl text-brand-blue mb-3 group-hover:text-brand-orange transition-colors">Galería</h3>
-            <p class="text-brand-blue/60 text-sm leading-relaxed">Explora cada perfil como una obra de arte.</p>
+            <h3 class="font-display text-lg md:text-xl text-brand-blue mb-2 md:mb-3 group-hover:text-brand-orange transition-colors">Galería</h3>
+            <p class="text-brand-blue/60 text-sm leading-relaxed">Cada sabor como una obra de arte.</p>
           </a>
-          <a href="/experiencia" class="p-8 group">
-            <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-brand-blue/5 flex items-center justify-center group-hover:bg-brand-blue/10 transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4B65D1" class="w-8 h-8">
+          <a href="/experiencia" class="p-6 md:p-8 group">
+            <div class="w-14 h-14 md:w-16 md:h-16 mx-auto mb-5 md:mb-6 rounded-full bg-brand-blue/5 flex items-center justify-center group-hover:bg-brand-blue/10 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#4B65D1" class="w-7 h-7">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12.75 9 12.75s9-5.53 9-12.75Z" />
               </svg>
             </div>
-            <h3 class="font-display text-xl text-brand-blue mb-3 group-hover:text-brand-orange transition-colors">Experience</h3>
+            <h3 class="font-display text-lg md:text-xl text-brand-blue mb-2 md:mb-3 group-hover:text-brand-orange transition-colors">La Colección</h3>
             <p class="text-brand-blue/60 text-sm leading-relaxed">El pack completo para todo el día.</p>
           </a>
         </div>

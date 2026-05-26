@@ -4,25 +4,25 @@ import Nav from '../../components/ui/Nav.astro';
 import Footer from '../../components/ui/Footer.astro';
 ---
 
-<Layout title="Tu Ritual | Drip Bag" description="El ritual del café drip bag explicado paso a paso">
+<Layout title="Tu Experiencia | Café sin prisa" description="Aprende a preparar tu café drip bag como un barista profesional">
   <Nav />
 
-  <main class="min-h-screen">
-    <section class="px-6 py-16 md:py-24 text-center">
+  <main class="pt-20">
+    <section class="px-6 py-12 md:py-16 text-center">
       <a href="/shop" class="font-accent text-xs uppercase tracking-[0.15em] text-brand-blue/40 hover:text-brand-orange transition-colors mb-4 inline-block">← Tienda</a>
-      <p class="font-accent text-xs uppercase tracking-[0.3em] text-brand-orange mb-4">Tu Ritual Privado</p>
-      <h1 class="font-display text-4xl md:text-6xl text-brand-blue mb-6">La maestría de un barista, en tus manos.</h1>
-      <p class="font-body text-brand-blue/60 max-w-2xl mx-auto">
+      <p class="font-accent text-xs uppercase tracking-[0.3em] text-brand-orange mb-4">Tu Ritual</p>
+      <h1 class="font-display text-3xl md:text-5xl lg:text-6xl text-brand-blue mb-6">La maestría de un barista, en tus manos.</h1>
+      <p class="font-body text-brand-blue/60 max-w-2xl mx-auto text-base md:text-lg">
         Tres pasos. Tres momentos. Un ritual que transforma cualquier momento ordinario en algo extraordinario.
       </p>
     </section>
 
     <section class="ritual-scrollytelling max-w-4xl mx-auto relative" id="ritual-scrolly">
-      <div class="ritual-frame sticky top-1/2 -translate-y-1/2 flex items-center justify-center h-[400px] z-10">
-        <svg class="ritual-svg w-64 h-64" viewBox="0 0 200 200" fill="none">
+      <div class="ritual-frame sticky top-1/2 -translate-y-1/2 flex items-center justify-center h-[300px] md:h-[400px] z-10">
+        <svg class="ritual-svg w-48 h-48 md:w-64 md:h-64" viewBox="0 0 200 200" fill="none">
           <g id="step1" class="ritual-step-group">
             <rect class="ritual-pack" x="70" y="50" width="60" height="80" rx="4" stroke="#4B65D1" stroke-width="1" fill="none"/>
-            <text x="100" y="95" text-anchor="middle" font-family="serif" font-size="14" fill="#4B65D1">DB</text>
+            <text x="100" y="95" text-anchor="middle" font-family="serif" font-size="14" fill="#4B65D1">C</text>
           </g>
           <g id="step2" class="ritual-step-group" style="opacity: 0; transition: opacity 0.5s ease;">
             <path d="M85 130 Q100 140 115 130" stroke="#4B65D1" stroke-width="0.5" fill="none"/>
@@ -39,35 +39,35 @@ import Footer from '../../components/ui/Footer.astro';
       </div>
 
       <div class="ritual-texts relative z-10 bg-brand-cream/80 backdrop-blur-sm">
-        <div class="ritual-text-item h-[350px] flex items-center justify-center" data-step="1">
-          <div class="text-center transition-opacity duration-500">
-            <span class="font-accent text-[10px] uppercase tracking-[0.3em] text-brand-orange block mb-4">Primer momento</span>
-            <h3 class="font-display text-4xl text-brand-blue mb-4">Rasga el filtro</h3>
-            <p class="font-body text-brand-blue/60 max-w-md mx-auto">Descubre el aroma que despierta tus sentidos. La textura del papel cruje bajo tus dedos anticipando lo que viene.</p>
+        <div class="ritual-text-item h-[280px] md:h-[350px] flex items-center justify-center" data-step="1">
+          <div class="text-center px-6 transition-opacity duration-500">
+            <span class="font-accent text-[10px] uppercase tracking-[0.3em] text-brand-orange block mb-3 md:mb-4">Primer momento</span>
+            <h3 class="font-display text-2xl md:text-4xl text-brand-blue mb-3 md:mb-4">Rasga el filtro</h3>
+            <p class="font-body text-brand-blue/60 max-w-md mx-auto text-sm md:text-base">Descubre el aroma que despierta tus sentidos. La textura del papel cruje bajo tus dedos anticipando lo que viene.</p>
           </div>
         </div>
-        <div class="ritual-text-item h-[350px] flex items-center justify-center" data-step="2">
-          <div class="text-center opacity-30 transition-opacity duration-500">
-            <span class="font-accent text-[10px] uppercase tracking-[0.3em] text-brand-orange block mb-4">Segundo momento</span>
-            <h3 class="font-display text-4xl text-brand-blue mb-4">Ancla el drip</h3>
-            <p class="font-body text-brand-blue/60 max-w-md mx-auto">Deja que repose elegantemente sobre tu taza. Los bordes se ajustan con precisión milimétrica.</p>
+        <div class="ritual-text-item h-[280px] md:h-[350px] flex items-center justify-center" data-step="2">
+          <div class="text-center px-6 opacity-30 transition-opacity duration-500">
+            <span class="font-accent text-[10px] uppercase tracking-[0.3em] text-brand-orange block mb-3 md:mb-4">Segundo momento</span>
+            <h3 class="font-display text-2xl md:text-4xl text-brand-blue mb-3 md:mb-4">Ancla el drip</h3>
+            <p class="font-body text-brand-blue/60 max-w-md mx-auto text-sm md:text-base">Deja que repose elegantemente sobre tu taza. Los bordes se ajustan con precisión milimétrica.</p>
           </div>
         </div>
-        <div class="ritual-text-item h-[350px] flex items-center justify-center" data-step="3">
-          <div class="text-center opacity-30 transition-opacity duration-500">
-            <span class="font-accent text-[10px] uppercase tracking-[0.3em] text-brand-orange block mb-4">Tercer momento</span>
-            <h3 class="font-display text-4xl text-brand-blue mb-4">Vierte el agua</h3>
-            <p class="font-body text-brand-blue/60 max-w-md mx-auto">Observa cómo el tiempo se detiene en cada gota. El café se libera lentamente, liberando todo su potencial.</p>
+        <div class="ritual-text-item h-[280px] md:h-[350px] flex items-center justify-center" data-step="3">
+          <div class="text-center px-6 opacity-30 transition-opacity duration-500">
+            <span class="font-accent text-[10px] uppercase tracking-[0.3em] text-brand-orange block mb-3 md:mb-4">Tercer momento</span>
+            <h3 class="font-display text-2xl md:text-4xl text-brand-blue mb-3 md:mb-4">Vierte el agua</h3>
+            <p class="font-body text-brand-blue/60 max-w-md mx-auto text-sm md:text-base">Observa cómo el tiempo se detiene en cada gota. El café se libera lentamente, liberando todo su potencial.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="px-6 py-16 md:py-24 text-center">
-      <p class="font-body text-brand-blue/60 mb-6">Listo para vivirlo?</p>
+    <section class="px-6 py-12 md:py-16 text-center">
+      <p class="font-body text-brand-blue/60 mb-6 text-sm md:text-base">Listo para vivirlo?</p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="/shop" class="btn-secondary">Ver la Colección</a>
-        <a href="/experiencia" class="btn-primary">The Experience</a>
+        <a href="/shop" class="btn-secondary w-full sm:w-auto">Ver la Tienda</a>
+        <a href="/experiencia" class="btn-primary w-full sm:w-auto">Ver la Colección</a>
       </div>
     </section>
   </main>
