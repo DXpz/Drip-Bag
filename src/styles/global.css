@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #4B65D1;
+  --color-brand-orange: #E6735C;
+  --color-brand-cream: #FBF9F4;
+  --font-display: 'Playfair Display', 'Cormorant Garamond', serif;
+  --font-accent: 'Montserrat', sans-serif;
+  --font-body: 'Lato', 'Inter', sans-serif;
+
+  --color-sabor-tradicional: #8D8782;
+  --color-sabor-amaretto: #6A4A4F;
+  --color-sabor-almendra: #C5B7A7;
+  --color-sabor-vainilla: #EFECE5;
+  --color-texto-sabor: #1A1A1A;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-brand-cream);
+  color: #374151;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 {
+  font-family: var(--font-display);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.btn-primary {
+  background-color: var(--color-brand-blue);
+  color: white;
+  padding: 0.75rem 2rem;
+  font-family: var(--font-accent);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.2em;
+  transition: all 0.3s;
+  border-radius: 2px;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-brand-orange);
+  box-shadow: 0 10px 30px rgba(230, 115, 92, 0.2);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(75, 101, 209, 0.3);
+  color: var(--color-brand-blue);
+  padding: 0.5rem 1.5rem;
+  font-family: var(--font-accent);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  transition: all 0.3s;
+  border-radius: 2px;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-brand-orange);
+  color: var(--color-brand-orange);
+}
+
+.sabor-card {
+  transition: background-color 0.5s ease, transform 0.4s ease;
+}
+
+.sabor-card:hover {
+  transform: translateY(-4px);
+}
+
+.sabor-card:hover .sabor-colour-fill {
+  opacity: 1;
+}
+
+.sabor-card:hover .sabor-pack {
+  filter: grayscale(0%);
+}
+
+.sabor-pack {
+  filter: grayscale(70%);
+  transition: filter 0.5s ease, transform 0.4s ease;
+}
+
+.sabor-colour-fill {
+  opacity: 0.15;
+  transition: opacity 0.5s ease;
+}
+
+.scroll-container {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-scroll {
+  cursor: grab;
+}
+
+.gallery-scroll:active {
+  cursor: grabbing;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grabbing {
+  cursor: grabbing;
+}
+
+.svg-line {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 1.5s ease-out;
+}
+
+.svg-line.draw {
+  stroke-dashoffset: 0;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
