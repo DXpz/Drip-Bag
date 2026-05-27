@@ -3,41 +3,21 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/ui/Nav.astro';
 import Footer from '../../components/ui/Footer.astro';
 import CartDrawer from '../../components/react/CartDrawer';
+import { getProducts } from '../../utils/shopify';
 
-const products = [
-  {
-    id: '1',
-    title: 'Café Tradicional',
-    handle: 'cafe-tradicional',
-    copy: 'El legado salvadoreño. Un cuerpo robusto y equilibrado, cultivado en nuestras tierras para quienes respetan la pureza del origen.',
-    color: '#8D8782',
-    price: '12.00',
-  },
-  {
-    id: '2',
-    title: 'Café Amaretto',
-    handle: 'cafe-amaretto',
-    copy: 'Notas cálidas de Amaretto fundidas en la intensidad de nuestro tueste tradicional. Un perfil profundo, sofisticado y envolvente.',
-    color: '#6A4A4F',
-    price: '14.00',
-  },
-  {
-    id: '3',
-    title: 'Café Almendra',
-    handle: 'cafe-almendra',
-    copy: 'Un tueste sedoso que resalta aromas a almendra tostada. El equilibrio perfecto entre suavidad y carácter.',
-    color: '#C5B7A7',
-    price: '14.00',
-  },
-  {
-    id: '4',
-    title: 'Café Vainilla',
-    handle: 'cafe-vainilla',
-    copy: 'Una infusión delicada. El dulzor aromático de la vainilla entrelazado magistralmente con la pureza de nuestro grano.',
-    color: '#EFECE5',
-    price: '14.00',
-  },
-];
+const rawProducts = await getProducts();
+
+const products = rawProducts.map((p, i) => ({
+  id: p.id,
+  title: p.title,
+  handle: p.handle,
+  copy: p.description || 'Un café premium cultivado con amor.',
+  color: ['#8D8782', '#6A4A4F', '#C5B7A7', '#EFECE5'][i % 4],
+  price: p.priceRange.minVariantPrice.amount,
+  image: p.images.edges[0]?.node.url,
+  variantId: p.variants.edges[0]?.node.id,
+  available: p.variants.edges[0]?.node.availableForSale,
+}));
 ---
 
 <Layout title="Tienda | Café sin prisa" description="Explora nuestra colección de drip bags premium de El Salvador">
@@ -75,19 +55,22 @@ const products = [
                   </div>
                   <div class="text-right">
                     <span class="font-display text-xl md:text-2xl" style={`color: ${product.color === '#EFECE5' ? '#1A1A1A' : product.color};`}>
-                      ${product.price}
+                      ${parseFloat(product.price).toFixed(2)}
                     </span>
                     <span class="font-accent text-[10px] uppercase tracking-[0.1em] text-gray-400 block mt-1">USD</span>
                   </div>
                 </div>
 
                 <div class="sabor-pack mb-6 md:mb-8 relative">
-                  <div class="aspect-[4/3] rounded-md bg-gradient-to-br from-gray-200 to-gray-100 flex items-center justify-center">
-                    <svg class="w-20 md:w-24 h-20 md:h-24 opacity-30" viewBox="0 0 100 100" fill="none">
-                      <rect x="25" y="20" width="50" height="60" rx="4" stroke={product.color} stroke-width="1"/>
-                      <rect x="30" y="25" width="40" height="50" rx="2" stroke={product.color} stroke-width="0.5"/>
-                      <text x="50" y="55" text-anchor="middle" font-family="serif" font-size="16" fill={product.color}>C</text>
-                    </svg>
+                  <div class="aspect-[4/3] rounded-md bg-gradient-to-br from-gray-200 to-gray-100 flex items-center justify-center overflow-hidden">
+                    {product.image ? (
+                      <img src={product.image} alt={product.title} class="w-full h-full object-cover opacity-80" loading="lazy" />
+                    ) : (
+                      <svg class="w-20 md:w-24 h-20 md:h-24 opacity-30" viewBox="0 0 100 100" fill="none">
+                        <rect x="25" y="20" width="50" height="60" rx="4" stroke={product.color} stroke-width="1"/>
+                        <text x="50" y="55" text-anchor="middle" font-family="serif" font-size="16" fill={product.color}>C</text>
+                      </svg>
+                    )}
                   </div>
                 </div>
 
@@ -99,8 +82,12 @@ const products = [
                   <a href="/galeria" class="font-accent text-[10px] md:text-xs uppercase tracking-[0.15em] text-brand-blue/50 hover:text-brand-orange transition-colors whitespace-nowrap">
                     Ver en galería →
                   </a>
-                  <button class="btn-secondary text-xs whitespace-nowrap" style={`border-color: ${product.color}40; color: ${product.color === '#EFECE5' ? '#4B65D1' : product.color};`}>
-                    Añadir
+                  <button
+                    class="btn-secondary text-xs whitespace-nowrap"
+                    disabled={!product.available}
+                    style={`border-color: ${product.color}40; color: ${product.color === '#EFECE5' ? '#4B65D1' : product.color}; ${!product.available ? 'opacity: 0.5; cursor: not-allowed;' : ''}`}
+                  >
+                    {product.available ? 'Añadir' : 'Agotado'}
                   </button>
                 </div>
               </div>
