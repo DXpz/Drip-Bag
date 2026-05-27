@@ -30,13 +30,11 @@ import logo from '../../assets/LOGOSINFONDO.png';
   </nav>
 </header>
 
-<div id="menu" class="fixed inset-0 z-40 hidden">
-  <div class="absolute inset-0 bg-brand-cream" id="menu-bg"></div>
-  <div class="absolute inset-0 overflow-hidden pointer-events-none" id="smoke-container">
-    <div class="smoke-wisp smoke-1"></div>
-    <div class="smoke-wisp smoke-2"></div>
-    <div class="smoke-wisp smoke-3"></div>
-  </div>
+<div id="menu" class="fixed inset-0 z-40 hidden flex-col">
+  <div class="menu-steam steam-1"></div>
+  <div class="menu-steam steam-2"></div>
+  <div class="menu-steam steam-3"></div>
+  <div class="absolute inset-0 bg-brand-cream menu-panel"></div>
   <div class="relative h-full w-full flex flex-col">
     <div class="flex justify-end p-4">
       <button id="menu-close" class="p-2 text-brand-blue">
@@ -46,10 +44,10 @@ import logo from '../../assets/LOGOSINFONDO.png';
       </button>
     </div>
     <nav class="flex-1 flex flex-col justify-center px-8 gap-2">
-      <a href="/shop" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">Tienda</a>
-      <a href="/galeria" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">Galería</a>
-      <a href="/ritual" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">Tu Experiencia</a>
-      <a href="/experiencia" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">La Colección</a>
+      <a href="/shop" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10 opacity-0 translate-y-4">Tienda</a>
+      <a href="/galeria" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10 opacity-0 translate-y-4">Galería</a>
+      <a href="/ritual" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10 opacity-0 translate-y-4">Tu Experiencia</a>
+      <a href="/experiencia" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10 opacity-0 translate-y-4">La Colección</a>
     </nav>
     <div class="p-8 border-t border-brand-blue/10">
       <a href="/shop" class="flex items-center gap-3 text-brand-blue">
@@ -68,22 +66,52 @@ import logo from '../../assets/LOGOSINFONDO.png';
     var menuClose = document.getElementById('menu-close');
     var menu = document.getElementById('menu');
     var menuLinks = menu ? menu.querySelectorAll('a') : [];
+    var steamElements = menu ? menu.querySelectorAll('.menu-steam') : [];
+    var menuLinkElements = menu ? menu.querySelectorAll('.menu-link') : [];
 
     if (menuBtn && menu) {
       menuBtn.onclick = function() {
-        menu.classList.remove('hidden');
+        menu.classList.remove('hidden', 'closing');
         menu.classList.add('flex');
+        menu.style.animation = 'steam-rise 0.5s ease-out forwards';
+
+        steamElements.forEach(function(el, i) {
+          el.style.animation = 'steam-float 2s ease-out ' + (i * 0.2) + 's infinite';
+        });
+
+        menuLinkElements.forEach(function(el, i) {
+          setTimeout(function() {
+            el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+          }, 150 + (i * 80));
+        });
       };
 
       menuClose.onclick = function() {
-        menu.classList.remove('flex');
-        menu.classList.add('hidden');
+        menu.classList.add('closing');
+        steamElements.forEach(function(el) {
+          el.style.animation = 'none';
+        });
+        setTimeout(function() {
+          menu.classList.remove('flex', 'closing');
+          menu.classList.add('hidden');
+          menu.style.animation = '';
+          menuLinkElements.forEach(function(el) {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(16px)';
+          });
+        }, 400);
       };
 
       menuLinks.forEach(function(link) {
         link.onclick = function() {
-          menu.classList.remove('flex');
-          menu.classList.add('hidden');
+          menu.classList.add('closing');
+          setTimeout(function() {
+            menu.classList.remove('flex', 'closing');
+            menu.classList.add('hidden');
+            menu.style.animation = '';
+          }, 400);
         };
       });
     }

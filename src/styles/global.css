@@ -148,91 +148,76 @@ h1, h2 {
   animation: float 4s ease-in-out infinite;
 }
 
-@keyframes smoke-rise {
+@keyframes steam-rise {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  40% {
+    clip-path: inset(0 0 60% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0% 0);
+  }
+}
+
+@keyframes steam-fall {
+  0% {
+    clip-path: inset(0 0 0% 0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.5;
+  }
+  100% {
+    clip-path: inset(100% 0 0 0);
+    opacity: 0;
+  }
+}
+
+@keyframes steam-float {
   0% {
     opacity: 0;
-    transform: translateY(0) scale(1) blur(0px);
+    transform: translateY(0) scale(1);
   }
-  20% {
-    opacity: 0.15;
-  }
-  50% {
-    opacity: 0.1;
-    transform: translateY(-40px) scale(1.5) blur(3px);
-  }
-  80% {
-    opacity: 0.05;
+  30% {
+    opacity: 0.6;
   }
   100% {
     opacity: 0;
-    transform: translateY(-100px) scale(2) blur(8px);
+    transform: translateY(-100px) scale(1.8);
   }
+}
+
+.menu-steam {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(230, 115, 92, 0.1) 0%, transparent 60%);
+}
+
+.steam-1 {
+  left: 0;
+  top: 0;
+}
+
+.steam-2 {
+  left: 25%;
+  top: 15%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(75, 101, 209, 0.1) 0%, transparent 55%);
+}
+
+.steam-3 {
+  left: -15%;
+  top: 25%;
+  background: radial-gradient(ellipse at 50% 100%, rgba(230, 115, 92, 0.08) 0%, transparent 40%);
 }
 
 #menu {
-  animation: menu-open 0.5s ease-out forwards;
+  animation: steam-rise 0.5s ease-out forwards;
 }
 
-#menu.hidden {
-  animation: menu-close 0.4s ease-in forwards;
-}
-
-@keyframes menu-open {
-  from {
-    opacity: 0;
-    transform: scaleY(0.3);
-    transform-origin: top;
-  }
-  to {
-    opacity: 1;
-    transform: scaleY(1);
-    transform-origin: top;
-  }
-}
-
-@keyframes menu-close {
-  from {
-    opacity: 1;
-    transform: scaleY(1);
-    transform-origin: top;
-  }
-  to {
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-  }
-}
-
-#menu {
-  animation: smoke-expand 0.5s ease-out forwards, smoke-fade 0.5s ease-out;
-}
-
-@keyframes smoke-expand {
-  from {
-    clip-path: inset(0 0 100% 0);
-  }
-  to {
-    clip-path: inset(0 0 0% 0);
-  }
-}
-
-@keyframes smoke-fade {
-  0% { opacity: 0.3; }
-  30% { opacity: 1; }
-  100% { opacity: 1; }
-}
-
-#menu.hidden {
-  animation: smoke-collapse 0.4s ease-in forwards;
-}
-
-@keyframes smoke-collapse {
-  from {
-    clip-path: inset(0 0 0% 0);
-    opacity: 1;
-  }
-  to {
-    clip-path: inset(0 0 100% 0);
-    opacity: 0;
-  }
+#menu.closing {
+  animation: steam-fall 0.4s ease-in forwards;
 }
