@@ -57,20 +57,14 @@ import logo from '../../assets/LOGOSINFONDO.png';
   </div>
 </div>
 
-<div id="page-loader" class="fixed inset-0 z-[200] hidden items-center justify-center bg-brand-cream">
-  <img src="/_astro/LOGOSINFONDO.C7JNKicG_Z28CJ8B.webp" alt="Café sin prisa" class="w-24 h-auto" />
-</div>
-
 <script is:inline>
   (function() {
     var menuBtn = document.getElementById('menu-btn');
     var menuClose = document.getElementById('menu-close');
     var menu = document.getElementById('menu');
-    var loader = document.getElementById('page-loader');
     var menuLinks = menu ? menu.querySelectorAll('.menu-link') : [];
-    var isTransitioning = false;
 
-    if (menuBtn && menu && loader) {
+    if (menuBtn && menu) {
       menuBtn.onclick = function() {
         menu.classList.remove('hidden');
         menu.classList.add('flex');
@@ -84,23 +78,9 @@ import logo from '../../assets/LOGOSINFONDO.png';
       menuLinks.forEach(function(link) {
         link.onclick = function(e) {
           e.preventDefault();
-          if (isTransitioning) return;
-          isTransitioning = true;
-
           menu.classList.remove('flex');
           menu.classList.add('hidden');
-
-          loader.classList.remove('hidden');
-          loader.classList.add('flex');
-
-          gsap.fromTo(loader.querySelector('img'),
-            { scale: 0.5, opacity: 0, rotation: -15 },
-            { scale: 1, opacity: 1, rotation: 0, duration: 0.5, ease: 'back.out(1.7)' }
-          );
-
-          setTimeout(function() {
-            window.location.href = link.getAttribute('href');
-          }, 600);
+          window.location.href = link.getAttribute('href');
         };
       });
 
