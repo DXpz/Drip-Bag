@@ -19,6 +19,29 @@ export const isLoading = atom(false);
 export const cartCount = atom(0);
 export const cartTotal = atom(0);
 
+interface CartLineNode {
+  id: string;
+  quantity: number;
+  merchandise: {
+    id: string;
+    title: string;
+    product: { title: string };
+    priceV2: { amount: string };
+    image?: { url: string };
+  };
+}
+
+function mapCartLines(lines: { edges: { node: CartLineNode }[] }): CartItem[] {
+  return lines.edges.map((edge) => ({
+    id: edge.node.id,
+    variantId: edge.node.merchandise.id,
+    title: edge.node.merchandise.product.title,
+    price: parseFloat(edge.node.merchandise.priceV2.amount),
+    quantity: edge.node.quantity,
+    image: edge.node.merchandise.image?.url,
+  }));
+}
+
 export async function addToCartItem(item: Omit<CartItem, 'quantity'>) {
   isLoading.set(true);
 
@@ -41,14 +64,7 @@ export async function addToCartItem(item: Omit<CartItem, 'quantity'>) {
     }
 
     if (cart) {
-      const items: CartItem[] = cart.lines.edges.map((edge: { node: { id: string; quantity: number; merchandise: { id: string; title: string; product: { title: string }; priceV2: { amount: string }; image?: { url: string } } }) => ({
-        id: edge.node.id,
-        variantId: edge.node.merchandise.id,
-        title: edge.node.merchandise.product.title,
-        price: parseFloat(edge.node.merchandise.priceV2.amount),
-        quantity: edge.node.quantity,
-        image: edge.node.merchandise.image?.url,
-      }));
+      const items = mapCartLines(cart.lines);
 
       cartItems.set(items);
       cartCount.set(items.reduce((sum, i) => sum + i.quantity, 0));
@@ -74,14 +90,7 @@ export async function loadCart() {
       cartId.set(cart.id);
       checkoutUrl.set(cart.checkoutUrl);
 
-      const items: CartItem[] = cart.lines.edges.map((edge: { node: { id: string; quantity: number; merchandise: { id: string; title: string; product: { title: string }; priceV2: { amount: string }; image?: { url: string } } }) => ({
-        id: edge.node.id,
-        variantId: edge.node.merchandise.id,
-        title: edge.node.merchandise.product.title,
-        price: parseFloat(edge.node.merchandise.priceV2.amount),
-        quantity: edge.node.quantity,
-        image: edge.node.merchandise.image?.url,
-      }));
+      const items = mapCartLines(cart.lines);
 
       cartItems.set(items);
       cartCount.set(items.reduce((sum, i) => sum + i.quantity, 0));

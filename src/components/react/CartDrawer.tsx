@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/preact';
+import { useEffect } from 'preact/hooks';
 import { cartItems, cartTotal, isCartOpen, closeCart, goToCheckout, loadCart, cartCount } from '../../store/cartStore';
-import { onMount } from 'preact/hooks';
 
 export default function CartDrawer() {
   const items = useStore(cartItems);
@@ -8,9 +8,9 @@ export default function CartDrawer() {
   const count = useStore(cartCount);
   const isOpen = useStore(isCartOpen);
 
-  onMount(() => {
+  useEffect(() => {
     loadCart();
-  });
+  }, []);
 
   if (!isOpen) return null;
 

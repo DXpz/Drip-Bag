@@ -157,7 +157,7 @@ const products = rawProducts.map((p, i) => ({
   <Footer />
 
   <script>
-    import { addToCartItem, openCart } from '../store/cartStore';
+    import { addToCartItem, openCart } from '../../store/cartStore';
 
     document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
       btn.addEventListener('click', async (e) => {
