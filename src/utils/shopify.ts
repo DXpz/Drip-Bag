@@ -340,3 +340,57 @@ export async function getCart(cartId: string): Promise<Cart | null> {
   const data = await shopifyFetch(query, { cartId });
   return data?.cart || null;
 }
+
+export async function updateCartLine(cartId: string, lineId: string, quantity: number): Promise<Cart | null> {
+  const query = `
+    mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!) {
+      cartLinesUpdate(cartId: $cartId, lines: $lines) {
+        cart {
+          id
+          checkoutUrl
+          lines(first: 100) {
+            edges {
+              node {
+                id
+                quantity
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                    product {
+                      title
+                    }
+                    priceV2 {
+                      amount
+                      currencyCode
+                    }
+                    image {
+                      url
+                    }
+                  }
+                }
+              }
+            }
+          }
+          cost {
+            totalAmount {
+              amount
+              currencyCode
+            }
+          }
+        }
+        userErrors {
+          field
+          message
+        }
+      }
+    }
+  `;
+
+  const data = await shopifyFetch(query, {
+    cartId,
+    lines: [{ id: lineId, quantity }],
+  });
+
+  return data?.cartLinesUpdate?.cart || null;
+}

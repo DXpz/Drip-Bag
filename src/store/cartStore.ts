@@ -1,5 +1,5 @@
 import { atom } from 'nanostores';
-import { createCart, addToCart as shopifyAddToCart, getCart, type Cart } from '../utils/shopify';
+import { createCart, addToCart as shopifyAddToCart, getCart, updateCartLine, type Cart } from '../utils/shopify';
 
 export interface CartItem {
   id: string;
@@ -75,6 +75,31 @@ export async function addToCartItem(item: Omit<CartItem, 'quantity'>) {
   } finally {
     isLoading.set(false);
   }
+}
+
+export async function updateQuantity(lineId: string, quantity: number) {
+  const cid = cartId.get();
+  if (!cid) return;
+
+  isLoading.set(true);
+  try {
+    const cart = await updateCartLine(cid, lineId, quantity);
+    if (cart) {
+      const items = mapCartLines(cart.lines);
+
+      cartItems.set(items);
+      cartCount.set(items.reduce((sum, i) => sum + i.quantity, 0));
+      cartTotal.set(items.reduce((sum, i) => sum + i.price * i.quantity, 0));
+    }
+  } catch (error) {
+    console.error('Error updating cart:', error);
+  } finally {
+    isLoading.set(false);
+  }
+}
+
+export async function removeFromCart(lineId: string) {
+  await updateQuantity(lineId, 0);
 }
 
 export async function loadCart() {

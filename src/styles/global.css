@@ -79,7 +79,7 @@ h1, h2 {
 }
 
 .sabor-card {
-  transition: background-color 0.5s ease, transform 0.4s ease;
+  transition: transform 0.4s ease;
 }
 
 .sabor-card:hover {
@@ -87,20 +87,19 @@ h1, h2 {
 }
 
 .sabor-card:hover .sabor-colour-fill {
-  opacity: 1;
+  opacity: 0;
 }
 
 .sabor-card:hover .sabor-pack {
-  filter: grayscale(0%);
+  filter: none;
 }
 
 .sabor-pack {
-  filter: grayscale(70%);
-  transition: filter 0.5s ease, transform 0.4s ease;
+  transition: transform 0.4s ease;
 }
 
 .sabor-colour-fill {
-  opacity: 0.15;
+  opacity: 0;
   transition: opacity 0.5s ease;
 }
 

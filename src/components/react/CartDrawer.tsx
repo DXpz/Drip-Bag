@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/preact';
 import { useEffect } from 'preact/hooks';
-import { cartItems, cartTotal, isCartOpen, closeCart, goToCheckout, loadCart, cartCount } from '../../store/cartStore';
+import { cartItems, cartTotal, isCartOpen, closeCart, goToCheckout, loadCart, cartCount, updateQuantity } from '../../store/cartStore';
 
 export default function CartDrawer() {
   const items = useStore(cartItems);
@@ -43,8 +43,27 @@ export default function CartDrawer() {
                 </div>
                 <div class="flex-1">
                   <h3 class="font-display text-brand-blue">{item.title}</h3>
-                  <p class="text-sm text-brand-blue/60">${item.price.toFixed(2)} x {item.quantity}</p>
-                  <p class="font-display text-lg text-brand-blue mt-1">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p class="text-sm text-brand-blue/60">${item.price.toFixed(2)}</p>
+                  <div class="flex items-center gap-3 mt-2">
+                    <div class="flex items-center border border-brand-blue/20 rounded">
+                      <button
+                        onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
+                        class="w-8 h-8 flex items-center justify-center text-brand-blue/60 hover:text-brand-orange transition-colors"
+                      >
+                        -
+                      </button>
+                      <span class="w-8 text-center font-display text-brand-blue">{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        class="w-8 h-8 flex items-center justify-center text-brand-blue/60 hover:text-brand-orange transition-colors"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span class="font-display text-lg text-brand-blue">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
