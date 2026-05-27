@@ -1,4 +1,5 @@
-import { atom, computed } from 'nanostores';
+import { atom } from 'nanostores';
+import { createCart, addToCart as shopifyAddToCart, getCart, type Cart } from '../utils/shopify';
 
 export interface CartItem {
   id: string;
@@ -11,50 +12,86 @@ export interface CartItem {
 
 export const cartItems = atom<CartItem[]>([]);
 export const isCartOpen = atom(false);
+export const checkoutUrl = atom<string>('');
+export const cartId = atom<string | null>(null);
+export const isLoading = atom(false);
 
-export const cartCount = computed(cartItems, (items) =>
-  items.reduce((sum, item) => sum + item.quantity, 0)
-);
+export const cartCount = atom(0);
+export const cartTotal = atom(0);
 
-export const cartTotal = computed(cartItems, (items) =>
-  items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-);
+export async function addToCartItem(item: Omit<CartItem, 'quantity'>) {
+  isLoading.set(true);
 
-export function addToCart(item: Omit<CartItem, 'quantity'>) {
-  const current = cartItems.get();
-  const existing = current.find((i) => i.variantId === item.variantId);
+  try {
+    let cid = cartId.get();
+    let cart: Cart | null = null;
 
-  if (existing) {
-    cartItems.set(
-      current.map((i) =>
-        i.variantId === item.variantId
-          ? { ...i, quantity: i.quantity + 1 }
-          : i
-      )
-    );
-  } else {
-    cartItems.set([...current, { ...item, quantity: 1 }]);
+    if (!cid) {
+      cart = await createCart(item.variantId, 1);
+      if (cart) {
+        cartId.set(cart.id);
+        checkoutUrl.set(cart.checkoutUrl);
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('shopify_cart_id', cart.id);
+          localStorage.setItem('shopify_checkout_url', cart.checkoutUrl);
+        }
+      }
+    } else {
+      cart = await shopifyAddToCart(cid, item.variantId, 1);
+    }
+
+    if (cart) {
+      const items: CartItem[] = cart.lines.edges.map((edge: { node: { id: string; quantity: number; merchandise: { id: string; title: string; product: { title: string }; priceV2: { amount: string }; image?: { url: string } } }) => ({
+        id: edge.node.id,
+        variantId: edge.node.merchandise.id,
+        title: edge.node.merchandise.product.title,
+        price: parseFloat(edge.node.merchandise.priceV2.amount),
+        quantity: edge.node.quantity,
+        image: edge.node.merchandise.image?.url,
+      }));
+
+      cartItems.set(items);
+      cartCount.set(items.reduce((sum, i) => sum + i.quantity, 0));
+      cartTotal.set(items.reduce((sum, i) => sum + i.price * i.quantity, 0));
+    }
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+  } finally {
+    isLoading.set(false);
   }
 }
 
-export function removeFromCart(variantId: string) {
-  cartItems.set(cartItems.get().filter((i) => i.variantId !== variantId));
-}
+export async function loadCart() {
+  if (typeof localStorage === 'undefined') return;
 
-export function updateQuantity(variantId: string, quantity: number) {
-  if (quantity <= 0) {
-    removeFromCart(variantId);
-    return;
+  const storedCartId = localStorage.getItem('shopify_cart_id');
+  if (!storedCartId) return;
+
+  isLoading.set(true);
+  try {
+    const cart = await getCart(storedCartId);
+    if (cart) {
+      cartId.set(cart.id);
+      checkoutUrl.set(cart.checkoutUrl);
+
+      const items: CartItem[] = cart.lines.edges.map((edge: { node: { id: string; quantity: number; merchandise: { id: string; title: string; product: { title: string }; priceV2: { amount: string }; image?: { url: string } } }) => ({
+        id: edge.node.id,
+        variantId: edge.node.merchandise.id,
+        title: edge.node.merchandise.product.title,
+        price: parseFloat(edge.node.merchandise.priceV2.amount),
+        quantity: edge.node.quantity,
+        image: edge.node.merchandise.image?.url,
+      }));
+
+      cartItems.set(items);
+      cartCount.set(items.reduce((sum, i) => sum + i.quantity, 0));
+      cartTotal.set(items.reduce((sum, i) => sum + i.price * i.quantity, 0));
+    }
+  } catch (error) {
+    console.error('Error loading cart:', error);
+  } finally {
+    isLoading.set(false);
   }
-  cartItems.set(
-    cartItems.get().map((i) =>
-      i.variantId === variantId ? { ...i, quantity } : i
-    )
-  );
-}
-
-export function clearCart() {
-  cartItems.set([]);
 }
 
 export function openCart() {
@@ -63,4 +100,11 @@ export function openCart() {
 
 export function closeCart() {
   isCartOpen.set(false);
+}
+
+export function goToCheckout() {
+  const url = checkoutUrl.get();
+  if (url) {
+    window.location.href = url;
+  }
 }

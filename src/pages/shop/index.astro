@@ -83,8 +83,12 @@ const products = rawProducts.map((p, i) => ({
                     Ver en galería →
                   </a>
                   <button
-                    class="btn-secondary text-xs whitespace-nowrap"
-                    disabled={!product.available}
+                    class="add-to-cart-btn btn-secondary text-xs whitespace-nowrap"
+                    data-variant-id={product.variantId}
+                    data-title={product.title}
+                    data-price={product.price}
+                    data-image={product.image || ''}
+                    disabled={!product.available || !product.variantId}
                     style={`border-color: ${product.color}40; color: ${product.color === '#EFECE5' ? '#4B65D1' : product.color}; ${!product.available ? 'opacity: 0.5; cursor: not-allowed;' : ''}`}
                   >
                     {product.available ? 'Añadir' : 'Agotado'}
@@ -151,4 +155,39 @@ const products = rawProducts.map((p, i) => ({
 
   <CartDrawer client:load />
   <Footer />
+
+  <script>
+    import { addToCartItem, openCart } from '../store/cartStore';
+
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const target = e.currentTarget as HTMLButtonElement;
+        const variantId = target.dataset.variantId;
+        const title = target.dataset.title;
+        const price = target.dataset.price;
+        const image = target.dataset.image;
+
+        if (!variantId || target.disabled) return;
+
+        target.textContent = 'Añadiendo...';
+        target.disabled = true;
+
+        await addToCartItem({
+          id: variantId,
+          variantId: variantId,
+          title: title || '',
+          price: parseFloat(price || '0'),
+          image: image || undefined,
+        });
+
+        target.textContent = 'Añadido ✓';
+        openCart();
+
+        setTimeout(() => {
+          target.textContent = 'Añadir';
+          target.disabled = false;
+        }, 2000);
+      });
+    });
+  </script>
 </Layout>
