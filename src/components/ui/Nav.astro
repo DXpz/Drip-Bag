@@ -4,9 +4,9 @@ import logo from '../../assets/LOGOSINFONDO.png';
 ---
 
 <header class="fixed top-0 left-0 right-0 z-50 bg-brand-cream/95 backdrop-blur-sm shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-  <nav class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
     <a href="/" class="flex items-center gap-3">
-      <Image src={logo} alt="Café sin prisa" class="h-10 md:h-12 w-auto" />
+      <Image src={logo} alt="Café sin prisa" class="h-9 md:h-12 w-auto" />
     </a>
 
     <div class="hidden md:flex items-center gap-8">
@@ -17,10 +17,10 @@ import logo from '../../assets/LOGOSINFONDO.png';
         Galería
       </a>
       <a href="/ritual" class="font-accent text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors">
-        Experiencia
+        Tu Experiencia
       </a>
       <a href="/experiencia" class="font-accent text-xs uppercase tracking-[0.15em] text-brand-blue/70 hover:text-brand-orange transition-colors">
-        Colección
+        La Colección
       </a>
       <button
         aria-label="Abrir carrito"
@@ -38,74 +38,92 @@ import logo from '../../assets/LOGOSINFONDO.png';
     <button
       id="menu-toggle"
       aria-label="Abrir menú"
-      class="md:hidden p-2 text-brand-blue hover:text-brand-orange transition-colors"
+      class="md:hidden p-2 text-brand-blue hover:text-brand-orange transition-colors z-50 relative"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+      <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+      </svg>
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 hidden">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
       </svg>
     </button>
   </nav>
 
-  <div id="mobile-menu" class="fixed inset-0 z-40 hidden">
-    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="menu-overlay"></div>
-    <div class="absolute right-0 top-0 h-full w-72 bg-brand-cream shadow-[-8px_0_30px_rgba(0,0,0,0.08)] transform translate-x-full transition-transform duration-300" id="menu-panel">
-      <div class="p-6">
-        <div class="flex items-center justify-between mb-10">
-          <Image src={logo} alt="Café sin prisa" class="h-10 w-auto" />
-          <button id="menu-close" class="p-2 text-brand-blue hover:text-brand-orange transition-colors" aria-label="Cerrar menú">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <nav class="flex flex-col gap-6">
-          <a href="/shop" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">Tienda</a>
-          <a href="/galeria" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">Galería</a>
-          <a href="/ritual" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">Tu Experiencia</a>
-          <a href="/experiencia" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors">La Colección</a>
+  <div id="mobile-menu" class="fixed inset-0 z-40 hidden pointer-events-none">
+    <div id="menu-overlay" class="absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"></div>
+    <div id="menu-panel" class="absolute right-0 top-0 h-full w-72 bg-brand-cream shadow-[-8px_0_30px_rgba(0,0,0,0.1)] transform-translate-x-full transition-transform duration-300 translate-x-full">
+      <div class="p-6 pt-16">
+        <nav class="flex flex-col gap-5">
+          <a href="/shop" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors py-2 border-b border-brand-blue/10">Tienda</a>
+          <a href="/galeria" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors py-2 border-b border-brand-blue/10">Galería</a>
+          <a href="/ritual" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors py-2 border-b border-brand-blue/10">Tu Experiencia</a>
+          <a href="/experiencia" class="font-display text-xl text-brand-blue hover:text-brand-orange transition-colors py-2 border-b border-brand-blue/10">La Colección</a>
         </nav>
-        <div class="mt-10 pt-10 border-t border-brand-blue/10">
-          <button
-            aria-label="Ver carrito"
-            class="flex items-center gap-3 text-brand-blue hover:text-brand-orange transition-colors"
-          >
+        <div class="mt-8 pt-8 border-t border-brand-blue/10">
+          <a href="/shop" class="flex items-center gap-3 text-brand-blue hover:text-brand-orange transition-colors">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
             </svg>
             <span class="font-accent text-sm uppercase tracking-[0.1em]">Carrito</span>
-          </button>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </header>
 
-<script>
-  const menuToggle = document.getElementById('menu-toggle');
-  const menuClose = document.getElementById('menu-close');
-  const menuOverlay = document.getElementById('menu-overlay');
-  const menuPanel = document.getElementById('menu-panel');
-  const mobileMenu = document.getElementById('mobile-menu');
+<script is:inline>
+  (function() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const iconMenu = document.getElementById('icon-menu');
+    const iconClose = document.getElementById('icon-close');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const menuPanel = document.getElementById('menu-panel');
 
-  function openMenu() {
-    mobileMenu?.classList.remove('hidden');
-    requestAnimationFrame(() => {
-      menuPanel?.classList.remove('translate-x-full');
+    if (!menuToggle || !mobileMenu || !menuPanel) return;
+
+    let isOpen = false;
+
+    function openMenu() {
+      isOpen = true;
+      mobileMenu.classList.remove('hidden', 'pointer-events-none');
+      menuPanel.classList.remove('translate-x-full');
+      menuOverlay.classList.remove('opacity-0');
+      menuOverlay.classList.add('opacity-100');
+      iconMenu.classList.add('hidden');
+      iconClose.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      isOpen = false;
+      menuPanel.classList.add('translate-x-full');
+      menuOverlay.classList.remove('opacity-100');
+      menuOverlay.classList.add('opacity-0');
+      iconMenu.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+      document.body.style.overflow = '';
+      setTimeout(function() {
+        mobileMenu.classList.add('hidden', 'pointer-events-none');
+      }, 300);
+    }
+
+    menuToggle.addEventListener('click', function() {
+      if (isOpen) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
     });
-  }
 
-  function closeMenu() {
-    menuPanel?.classList.add('translate-x-full');
-    setTimeout(() => {
-      mobileMenu?.classList.add('hidden');
-    }, 300);
-  }
+    if (menuOverlay) {
+      menuOverlay.addEventListener('click', closeMenu);
+    }
 
-  menuToggle?.addEventListener('click', openMenu);
-  menuClose?.addEventListener('click', closeMenu);
-  menuOverlay?.addEventListener('click', closeMenu);
-
-  document.querySelectorAll('#menu-panel a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
+    var links = menuPanel.querySelectorAll('a');
+    links.forEach(function(link) {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
 </script>
