@@ -22,7 +22,7 @@ import logo from '../../assets/LOGOSINFONDO.png';
       </button>
     </div>
 
-    <button id="menu-btn" aria-label="Menú" class="md:hidden p-2 text-brand-blue">
+    <button id="menu-btn" aria-label="Menú" class="md:hidden p-2 text-brand-blue z-50">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
@@ -30,55 +30,62 @@ import logo from '../../assets/LOGOSINFONDO.png';
   </nav>
 </header>
 
-<div id="menu" class="fixed inset-0 z-40 hidden" style="display: none;">
-  <div id="menu-bg" class="absolute inset-0 bg-black/50"></div>
-  <div id="menu-content" class="absolute right-0 top-0 h-full w-64 bg-brand-cream p-6">
-    <div class="flex justify-end mb-6">
+<div id="menu" class="fixed inset-0 z-40 hidden">
+  <div class="absolute inset-0 bg-brand-cream" id="menu-bg"></div>
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" id="smoke-container">
+    <div class="smoke-wisp smoke-1"></div>
+    <div class="smoke-wisp smoke-2"></div>
+    <div class="smoke-wisp smoke-3"></div>
+  </div>
+  <div class="relative h-full w-full flex flex-col">
+    <div class="flex justify-end p-4">
       <button id="menu-close" class="p-2 text-brand-blue">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
-    <nav class="flex flex-col gap-4">
-      <a href="/shop" class="font-display text-lg text-brand-blue py-2 border-b border-brand-blue/10">Tienda</a>
-      <a href="/galeria" class="font-display text-lg text-brand-blue py-2 border-b border-brand-blue/10">Galería</a>
-      <a href="/ritual" class="font-display text-lg text-brand-blue py-2 border-b border-brand-blue/10">Tu Experiencia</a>
-      <a href="/experiencia" class="font-display text-lg text-brand-blue py-2 border-b border-brand-blue/10">La Colección</a>
+    <nav class="flex-1 flex flex-col justify-center px-8 gap-2">
+      <a href="/shop" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">Tienda</a>
+      <a href="/galeria" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">Galería</a>
+      <a href="/ritual" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">Tu Experiencia</a>
+      <a href="/experiencia" class="menu-link font-display text-3xl text-brand-blue py-3 border-b border-brand-blue/10">La Colección</a>
     </nav>
-    <div class="mt-8 pt-6 border-t border-brand-blue/10">
+    <div class="p-8 border-t border-brand-blue/10">
       <a href="/shop" class="flex items-center gap-3 text-brand-blue">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
         </svg>
-        <span class="font-accent text-xs uppercase tracking-[0.1em]">Carrito</span>
+        <span class="font-accent text-sm uppercase tracking-[0.1em]">Ver Carrito</span>
       </a>
     </div>
   </div>
 </div>
 
 <script is:inline>
-  var menuBtn = document.getElementById('menu-btn');
-  var menuClose = document.getElementById('menu-close');
-  var menu = document.getElementById('menu');
-  var menuBg = document.getElementById('menu-bg');
-  var menuLinks = menu.querySelectorAll('a');
+  (function() {
+    var menuBtn = document.getElementById('menu-btn');
+    var menuClose = document.getElementById('menu-close');
+    var menu = document.getElementById('menu');
+    var menuLinks = menu ? menu.querySelectorAll('a') : [];
 
-  menuBtn.onclick = function() {
-    menu.style.display = 'flex';
-  };
+    if (menuBtn && menu) {
+      menuBtn.onclick = function() {
+        menu.classList.remove('hidden');
+        menu.classList.add('flex');
+      };
 
-  menuClose.onclick = function() {
-    menu.style.display = 'none';
-  };
+      menuClose.onclick = function() {
+        menu.classList.remove('flex');
+        menu.classList.add('hidden');
+      };
 
-  menuBg.onclick = function() {
-    menu.style.display = 'none';
-  };
-
-  menuLinks.forEach(function(link) {
-    link.onclick = function() {
-      menu.style.display = 'none';
-    };
-  });
+      menuLinks.forEach(function(link) {
+        link.onclick = function() {
+          menu.classList.remove('flex');
+          menu.classList.add('hidden');
+        };
+      });
+    }
+  })();
 </script>

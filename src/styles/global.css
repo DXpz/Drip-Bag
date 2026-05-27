@@ -147,3 +147,92 @@ h1, h2 {
 .float-animation {
   animation: float 4s ease-in-out infinite;
 }
+
+@keyframes smoke-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(1) blur(0px);
+  }
+  20% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.1;
+    transform: translateY(-40px) scale(1.5) blur(3px);
+  }
+  80% {
+    opacity: 0.05;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(2) blur(8px);
+  }
+}
+
+#menu {
+  animation: menu-open 0.5s ease-out forwards;
+}
+
+#menu.hidden {
+  animation: menu-close 0.4s ease-in forwards;
+}
+
+@keyframes menu-open {
+  from {
+    opacity: 0;
+    transform: scaleY(0.3);
+    transform-origin: top;
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+}
+
+@keyframes menu-close {
+  from {
+    opacity: 1;
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  to {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+}
+
+#menu {
+  animation: smoke-expand 0.5s ease-out forwards, smoke-fade 0.5s ease-out;
+}
+
+@keyframes smoke-expand {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+  }
+}
+
+@keyframes smoke-fade {
+  0% { opacity: 0.3; }
+  30% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+#menu.hidden {
+  animation: smoke-collapse 0.4s ease-in forwards;
+}
+
+@keyframes smoke-collapse {
+  from {
+    clip-path: inset(0 0 0% 0);
+    opacity: 1;
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+}
